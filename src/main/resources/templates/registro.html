@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Registro</title>
+  </head>
+  <body>
+    <form th:action="@{/imcalculator/registro}" method="post">
+      <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required="required" />
+      <input type="password" name="contrasena" placeholder="Contraseña" required="required" />
+      <input type="number" name="edad" placeholder="Edad" required="required" />
+      <input type="number" name="estatura" placeholder="Estatura (m)" step="0.01" required="required" />
+      <button type="submit">Registrarse</button>
+    </form>
+  </body>
+</html>

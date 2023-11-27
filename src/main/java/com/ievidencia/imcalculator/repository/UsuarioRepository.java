@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     public Usuario findByNombreUsuarioAndContrasena(String nombreUsuario, String contrasena);
+    public Usuario findByNombreUsuario(String nombreUsuario);
 }

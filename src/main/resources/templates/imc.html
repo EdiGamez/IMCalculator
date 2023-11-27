@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Calculadora de IMC</title>
+  </head>
+  <body>
+    <form th:action="@{/imcalculator/imc}" method="post">
+      <input type="number" name="masaCorporal" placeholder="Masa corporal" required="required" />
+      <button type="submit">Calcular IMC</button>
+    </form>
+    <table>
+      <tr>
+        <th>Fecha</th>
+        <th>IMC</th>
+      </tr>
+      <tr th:each="imc : ${historial}">
+        <td th:text="${imc.fecha}"></td>
+        <td th:text="${imc.valorImc}"></td>
+      </tr>
+    </table>
+  </body>
+</html>
