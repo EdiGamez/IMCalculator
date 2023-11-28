@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Calculadora de IMC</title>
-  </head>
-  <body>
-    <form th:action="@{/imcalculator/imc}" method="post">
-      <input type="number" name="masaCorporal" placeholder="Masa corporal" required="required" />
-      <button type="submit">Calcular IMC</button>
-    </form>
-    <table>
-      <tr>
-        <th>Fecha</th>
-        <th>IMC</th>
-      </tr>
-      <tr th:each="imc : ${historial}">
-        <td th:text="${imc.fecha}"></td>
-        <td th:text="${imc.valorImc}"></td>
-      </tr>
-    </table>
-  </body>
+<head>
+  <title>Calculadora de IMC</title>
+</head>
+<body>
+<h1>Bienvenido, <span th:text="${usuario.nombreUsuario}"></span>!</h1>
+<!-- Agregar un botón para cerrar sesión -->
+<form action="/logout" method="post">
+  <button type="submit">Cerrar Sesión</button>
+</form>
+<h2>Calcula tu IMC</h2>
+<p>Estatura: <span th:text="${usuario.estatura}"></span> metros</p>
+<form action="#" th:action="@{/imcalculator/imc}" th:object="${imc}" method="post">
+  <input type="number" name="masaCorporal" placeholder="Peso (kg)" step="0.01" required>
+  <button type="submit">Calcular</button>
+</form>
+
+<h2>Historial de IMC</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Fecha</th>
+    <th>IMC</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="imc : ${historialIMC}">
+    <td th:text="${#temporals.format(imc.fecha, 'yyyy-MM-dd')}"></td>
+    <td th:text="${T(java.lang.Math).round(imc.valorImc * 100.0) / 100.0}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
 </html>

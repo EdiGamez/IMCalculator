@@ -6,21 +6,27 @@ import com.ievidencia.imcalculator.repository.IMCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class IMCService {
-    @Autowired
-    private IMCRepository imcRepository;
+    private final IMCRepository imcRepository;
 
-    public IMC saveIMC(IMC imc) {
+    @Autowired
+    public IMCService(IMCRepository imcRepository) {
+        this.imcRepository = imcRepository;
+    }
+
+    public IMC guardarIMC(IMC imc) {
         return imcRepository.save(imc);
     }
 
-    public IMC getIMC(Long id) {
-        return imcRepository.findById(id).orElse(null);
+
+    public List<IMC> obtenerHistorialIMC(Usuario usuario) {
+        return imcRepository.findByUsuarioOrderByFechaDesc(usuario);
     }
-    public List<IMC> getHistorialIMC(Usuario usuario){
-        return  imcRepository.findByUsuario(usuario);
+    public boolean existsById(Long id){
+        return imcRepository.existsById(id);
     }
 }

@@ -5,10 +5,17 @@
   </head>
   <body>
     <form th:action="@{/imcalculator/registro}" method="post">
-      <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required="required" />
-      <input type="password" name="contrasena" placeholder="Contraseña" required="required" />
-      <input type="number" name="edad" placeholder="Edad" required="required" />
-      <input type="number" name="estatura" placeholder="Estatura (m)" step="0.01" required="required" />
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="text" name="apellido" placeholder="Apellido" required>
+      <input type="number" name="edad" placeholder="Edad" required>
+      <input type="number" name="estatura" placeholder="Estatura" step="0.01" required>
+      <select name="sexo" required>
+        <option value="">Selecciona tu sexo</option>
+        <option value="h">Hombre</option>
+        <option value="m">Mujer</option>
+      </select>
+      <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required>
+      <input type="password" name="contrasena" placeholder="Contraseña" required>
       <button type="submit">Registrarse</button>
     </form>
   </body>
