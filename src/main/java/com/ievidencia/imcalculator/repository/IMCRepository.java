@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IMCRepository extends JpaRepository<IMC, Long> {
-    public List<IMC> findByUsuario(Usuario usuario);
+    boolean existsById(Long id);
+    List<IMC> findByUsuarioOrderByFechaDesc(Usuario usuario);
 }

@@ -1,24 +1,35 @@
 package com.ievidencia.imcalculator.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuario")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nombre_usuario")
+
+    @Column(name = "nombre_usuario", length = 50, nullable = false)
     private String nombreUsuario;
+
+    @Column(name = "contrasena", length = 60, nullable = false)
     private String contrasena;
+
+    @Column(name = "edad", nullable = false)
     private Integer edad;
+
+    @Column(name = "estatura", nullable = false)
     private Double estatura;
-    @OneToMany(mappedBy = "usuario")
-    @JsonIgnore
-    private List<IMC> imc;
+
+    @Column(name = "nombre", length = 255, nullable = false)
+    private String nombre;
+
+    @Column(name = "apellido", length = 255, nullable = false)
+    private String apellido;
+
+    @Column(name = "sexo", length = 1, nullable = false)
+    private String sexo;
 
     public Long getId() {
         return id;
@@ -60,11 +71,27 @@ public class Usuario {
         this.estatura = estatura;
     }
 
-    public List<IMC> getImc() {
-        return imc;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setImc(List<IMC> imc) {
-        this.imc = imc;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 }

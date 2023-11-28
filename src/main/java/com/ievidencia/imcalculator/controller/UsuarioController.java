@@ -2,10 +2,17 @@ package com.ievidencia.imcalculator.controller;
 
 import com.ievidencia.imcalculator.model.Usuario;
 import com.ievidencia.imcalculator.service.UsuarioService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/imcalculator")
@@ -13,40 +20,38 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping("/usuario")
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.saveUsuario(usuario);
-    }
-
-    @GetMapping("/usuario/{id}")
-    public Usuario getUsuario(@PathVariable Long id) {
-        return usuarioService.getUsuario(id);
-    }
     @GetMapping("/login")
-    public String showLoginForm(Model model) {
-        model.addAttribute("usuario", new Usuario());
+    public String login() {
         return "login";
     }
 
     @PostMapping("/login")
-    public String processLoginForm(Usuario usuario) {
-        Usuario existing = usuarioService.findByNombreUsuarioAndContrasena(usuario.getNombreUsuario(), usuario.getContrasena());
-        if (existing != null) {
-            return "redirect:/imc";
+    public String login(@RequestParam String nombreUsuario, @RequestParam String contrasena, Model model, HttpSession session) {
+        Usuario usuario = usuarioService.iniciarSesion(nombreUsuario, contrasena);
+        if (usuario != null) {
+            session.setAttribute("usuarioActual", usuario);
+            model.addAttribute("usuario", usuario);
+            return "redirect:/imcalculator/imc";
         } else {
+            model.addAttribute("error", "Nombre de Usuario o contraseña incorrecto");
             return "login";
         }
     }
 
     @GetMapping("/registro")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("usuario", new Usuario());
+    public String registro() {
         return "registro";
     }
-
     @PostMapping("/registro")
-    public String processRegistrationForm(Usuario usuario) {
-        usuarioService.saveUsuario(usuario);
-        return "redirect:/login";
+    public String registro(@ModelAttribute Usuario usuario, Model model) {
+        System.out.println("Quiero llorar");
+
+        if (usuarioService.existsByNombreUsuario(usuario.getNombreUsuario())) {
+            model.addAttribute("error", "El nombre de usuario ya existe");
+            return "registro";
+        } else {
+            Usuario usuarioRegistrado = usuarioService.registrarUsuario(usuario);
+            return "redirect:/imcalculator/login";
+        }
     }
 }
