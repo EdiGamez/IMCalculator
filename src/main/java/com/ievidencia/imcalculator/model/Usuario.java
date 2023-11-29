@@ -1,6 +1,7 @@
 package com.ievidencia.imcalculator.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "usuario")
@@ -9,25 +10,25 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull
     @Column(name = "nombre_usuario", length = 50, nullable = false)
     private String nombreUsuario;
-
+    @NotNull
     @Column(name = "contrasena", length = 60, nullable = false)
     private String contrasena;
-
+    @NotNull
     @Column(name = "edad", nullable = false)
     private Integer edad;
-
+    @NotNull
     @Column(name = "estatura", nullable = false)
     private Double estatura;
-
+    @NotNull
     @Column(name = "nombre", length = 255, nullable = false)
     private String nombre;
-
+    @NotNull
     @Column(name = "apellido", length = 255, nullable = false)
     private String apellido;
-
+    @NotNull
     @Column(name = "sexo", length = 1, nullable = false)
     private String sexo;
 

@@ -1,5 +1,6 @@
 package com.ievidencia.imcalculator.controller;
 
+import com.ievidencia.imcalculator.exceptions.UsuarioNullException;
 import com.ievidencia.imcalculator.model.IMC;
 import com.ievidencia.imcalculator.model.Usuario;
 import com.ievidencia.imcalculator.service.IMCService;
@@ -40,6 +41,9 @@ public class IMCController {
     @PostMapping("/imc")
     public String calcularIMC(@ModelAttribute IMC imc, Model model, HttpSession session, @RequestParam double estatura) {
         Usuario usuario = usuarioService.getUsuarioActual(session);
+        if(usuario == null){
+            throw new UsuarioNullException("Usuario No encontrado");
+        }
         usuario.setEstatura(estatura);
         imc.setUsuario(usuario);
         imc.setFecha(LocalDateTime.now());

@@ -90,39 +90,39 @@
     }
 
     th, td {
-      padding: 8px; /* Aumentar el espacio entre celdas */
-      font-size: 16px; /* Ajustar el tamaño de fuente de la tabla */
+      padding: 8px;
+      font-size: 16px;
     }
 
     .calculate-button {
-      background-color: #4CAF50; /* Green */
+      background-color: #4CAF50;
       border: none;
       color: white;
-      padding: 10px 15px; /* Reducir el tamaño del botón */
+      padding: 10px 15px;
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 14px; /* Hacer el botón más pequeño */
+      font-size: 14px;
       margin: 4px 2px;
       cursor: pointer;
-      width: 100%; /* Utilizar el ancho completo del contenedor */
+      width: 100%;
     }
 
     .calculate-button:hover {
-      background-color: #45a049; /* Cambiar color al pasar el mouse */
+      background-color: #45a049;
     }
 
     input[type=number] {
       font-size: 16px;
       margin-bottom: 10px;
-      width: 100%; /* Utilizar el ancho completo del contenedor */
+      width: 100%;
     }
 
     label {
       display: block;
       margin-bottom: 6px;
-      font-size: 14px; /* Reducir el tamaño de la fuente del label */
-      width: 100%; /* Establecer el mismo ancho que el botón */
+      font-size: 14px;
+      width: 100%;
     }
   </style>
 </head>
@@ -136,7 +136,11 @@
     </form>
   </div>
 
-  <h2 class="welcome-message">Bienvenido, <span th:text="${usuario.nombre} + ' '+ ${usuario.apellido}"></span>!</h2>
+  <h2 class="welcome-message">
+    <span th:if="${usuario.sexo == 'h'}">Bienvenido,</span>
+    <span th:if="${usuario.sexo == 'm'}">Bienvenida,</span>
+    <span th:text="${usuario.nombre} + ' '+ ${usuario.apellido}"></span>
+  </h2>
   <div class="calculator">
     <h2>Calcula tu IMC</h2>
     <form action="#" th:action="@{/imcalculator/imc}" th:object="${imc}" method="post">

@@ -1,6 +1,7 @@
 package com.ievidencia.imcalculator.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public class IMC {
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
-
+    @NotNull
     @Column(name = "masa_corporal", nullable = false)
     private Double masaCorporal;
 
