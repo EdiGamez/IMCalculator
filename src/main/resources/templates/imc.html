@@ -141,6 +141,7 @@
     <span th:if="${usuario.sexo == 'm'}">Bienvenida,</span>
     <span th:text="${usuario.nombre} + ' '+ ${usuario.apellido}"></span>
   </h2>
+
   <div class="calculator">
     <h2>Calcula tu IMC</h2>
     <form action="#" th:action="@{/imcalculator/imc}" th:object="${imc}" method="post">
