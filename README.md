@@ -2,20 +2,20 @@
 
 ## Descripción del proyecto
 
-Breve descripción de tu proyecto. ¿Qué hace tu proyecto? ¿Por qué es útil?
+IMCalculator es una aplicación web que permite a los usuarios calcular su Índice de Masa Corporal (IMC). Los usuarios pueden registrarse, iniciar sesión, calcular su IMC y ver un historial de sus cálculos de IMC.
 
 ## Instalación
 
-Instrucciones paso a paso sobre cómo instalar y configurar tu proyecto. Incluye cualquier dependencia que deba instalarse.
+Por favor, sigue las instrucciones de tu entorno de desarrollo para desplegar aplicaciones Spring Boot. Necesitarás tener instalado Java y un servidor de base de datos compatible.
 
 ## Uso
 
-Explica cómo usar tu proyecto. Incluye ejemplos.
+Una vez que la aplicación esté en ejecución, puedes navegar a la página de inicio de sesión y registrarte como nuevo usuario. Después de iniciar sesión, podrás calcular tu IMC y ver un historial de tus cálculos de IMC.
 
 ## Contribución
 
-Detalla cómo otros desarrolladores pueden contribuir a tu proyecto. ¿Hay algún código de conducta o reglas específicas que deben seguir?
+Si deseas contribuir a este proyecto, por favor, haz un fork del repositorio y envía un pull request con tus cambios. Asegúrate de que tus cambios pasen todas las pruebas existentes y añade nuevas pruebas para cualquier nueva funcionalidad.
 
 ## Licencia
 
-Información sobre la licencia de tu proyecto.
+Si deseas contribuir a este proyecto, por favor, haz un fork del repositorio y envía un pull request con tus cambios. Asegúrate de que tus cambios pasen todas las pruebas existentes y añade nuevas pruebas para cualquier nueva funcionalidad.
