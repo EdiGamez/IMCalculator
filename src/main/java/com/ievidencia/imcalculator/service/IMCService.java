@@ -22,7 +22,6 @@ public class IMCService {
         return imcRepository.save(imc);
     }
 
-
     public List<IMC> obtenerHistorialIMC(Usuario usuario) {
         return imcRepository.findByUsuarioOrderByFechaDesc(usuario);
     }

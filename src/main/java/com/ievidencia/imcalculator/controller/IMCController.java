@@ -25,6 +25,7 @@ public class IMCController {
 
     @Autowired
     private UsuarioService usuarioService;
+
     @GetMapping("/imc")
     public String calcularIMC(Model model, HttpSession session) {
         Usuario usuario = usuarioService.getUsuarioActual(session);

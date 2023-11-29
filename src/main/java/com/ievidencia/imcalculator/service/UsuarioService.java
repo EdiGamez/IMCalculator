@@ -45,7 +45,6 @@ public class UsuarioService {
     }
 
     public Usuario iniciarSesion(String nombreUsuario, String contrasena) {
-        // Verificar la contraseña
         Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario);
         if (usuario != null && usuario.getContrasena().equals(hashPassword(contrasena))) {
             return usuario;
