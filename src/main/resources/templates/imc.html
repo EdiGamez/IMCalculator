@@ -2,34 +2,172 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Calculadora de IMC</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #d4f5d4;
+      margin: 0;
+    }
+
+    .imc-container {
+      width: 800px;
+      padding: 16px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .imc-container h1 {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .logout-container {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      margin-top: 10px;
+    }
+
+    .logout-button {
+      background-color: #f44336;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      outline: none;
+      width: 85%;
+      margin-right: 15%;
+      margin-top: 20%;
+    }
+
+    .logout-button:hover {
+      background-color: #d32f2f;
+    }
+
+
+    .welcome-message {
+      font-size: 18px;
+      text-align: center;
+      margin-left: 10px;
+    }
+
+    .calculator, .history {
+      width: 45%;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .history {
+      width: 100%;
+      overflow-y: auto;
+      height: 300px;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .welcome-message, .history-title {
+      font-size: 24px;
+      text-align: center;
+      color: #2196f3;
+      font-weight: bold;
+    }
+
+    th, td {
+      padding: 8px; /* Aumentar el espacio entre celdas */
+      font-size: 16px; /* Ajustar el tamaño de fuente de la tabla */
+    }
+
+    .calculate-button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 10px 15px; /* Reducir el tamaño del botón */
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px; /* Hacer el botón más pequeño */
+      margin: 4px 2px;
+      cursor: pointer;
+      width: 100%; /* Utilizar el ancho completo del contenedor */
+    }
+
+    .calculate-button:hover {
+      background-color: #45a049; /* Cambiar color al pasar el mouse */
+    }
+
+    input[type=number] {
+      font-size: 16px;
+      margin-bottom: 10px;
+      width: 100%; /* Utilizar el ancho completo del contenedor */
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px; /* Reducir el tamaño de la fuente del label */
+      width: 100%; /* Establecer el mismo ancho que el botón */
+    }
+  </style>
 </head>
 <body>
-<h1>Bienvenido, <span th:text="${usuario.nombreUsuario}"></span>!</h1>
-<!-- Agregar un botón para cerrar sesión -->
-<form action="/logout" method="post">
-  <button type="submit">Cerrar Sesión</button>
-</form>
-<h2>Calcula tu IMC</h2>
-<p>Estatura: <span th:text="${usuario.estatura}"></span> metros</p>
-<form action="#" th:action="@{/imcalculator/imc}" th:object="${imc}" method="post">
-  <input type="number" name="masaCorporal" placeholder="Peso (kg)" step="0.01" required>
-  <button type="submit">Calcular</button>
-</form>
+<div class="imc-container">
+  <h1><span style="color: red;">IM</span><span style="color: green;">C</span><span style="color: blue;">ALCULATOR</span></h1>
 
-<h2>Historial de IMC</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Fecha</th>
-    <th>IMC</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="imc : ${historialIMC}">
-    <td th:text="${#temporals.format(imc.fecha, 'yyyy-MM-dd')}"></td>
-    <td th:text="${T(java.lang.Math).round(imc.valorImc * 100.0) / 100.0}"></td>
-  </tr>
-  </tbody>
-</table>
+  <div class="logout-container">
+    <form th:action="@{/imcalculator/logout}" method="post">
+      <button type="submit" class="logout-button">Cerrar Sesión</button>
+    </form>
+  </div>
+
+  <h2 class="welcome-message">Bienvenido, <span th:text="${usuario.nombre} + ' '+ ${usuario.apellido}"></span>!</h2>
+  <div class="calculator">
+    <h2>Calcula tu IMC</h2>
+    <form action="#" th:action="@{/imcalculator/imc}" th:object="${imc}" method="post">
+      <label for="estatura">Estatura (m):</label>
+      <input type="number" id="estatura" name="estatura" th:value="${usuario.estatura}" step="0.01" required>
+      <label for="masaCorporal">Peso (kg):</label>
+      <input type="number" id="masaCorporal" name="masaCorporal" placeholder="Peso (kg)" step="0.01" required>
+      <button type="submit" class="calculate-button">Calcular</button>
+    </form>
+  </div>
+  <div class="history">
+    <h2 class="history-title">Historial de IMC</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Estatura (m)</th>
+        <th>Peso (kg)</th>
+        <th>IMC</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="imc : ${historialIMC}">
+        <td th:text="${#temporals.format(imc.fecha, 'dd/MM/yy')}"></td>
+        <td th:text="${usuario.estatura}"></td>
+        <td th:text="${imc.masaCorporal}"></td>
+        <td th:text="${T(java.lang.Math).round(imc.valorImc * 100.0) / 100.0}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>

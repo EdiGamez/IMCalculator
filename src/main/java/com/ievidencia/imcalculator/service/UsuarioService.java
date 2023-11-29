@@ -24,15 +24,19 @@ public class UsuarioService {
     }
 
     public Usuario registrarUsuario(Usuario usuario) {
-        // Verificar si el nombre de usuario ya existe
+
         if (usuarioRepository.existsByNombreUsuario(usuario.getNombreUsuario())) {
             throw new UsuarioAlreadyExistsException("El nombre de usuario ya existe");
         }
+        if (usuario.getEdad() < 15) {
+            throw new IllegalArgumentException("La edad debe ser mayor o igual a 15");
+        }
+        if (usuario.getEstatura() < 1 || usuario.getEstatura() > 2.5) {
+            throw new IllegalArgumentException("La estatura debe estar entre 1 y 2.5 metros");
+        }
 
-        // Codificar la contraseña
         usuario.setContrasena(hashPassword(usuario.getContrasena()));
 
-        // Guardar el nuevo usuario
         return usuarioRepository.save(usuario);
 
     }

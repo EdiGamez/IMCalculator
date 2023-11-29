@@ -27,6 +27,9 @@ public class IMCController {
     @GetMapping("/imc")
     public String calcularIMC(Model model, HttpSession session) {
         Usuario usuario = usuarioService.getUsuarioActual(session);
+        if (usuario == null) {
+            return "redirect:/imcalculator/login";
+        }
         model.addAttribute("usuario", usuario);
         model.addAttribute("imc", new IMC());
         List<IMC> historialIMC = imcService.obtenerHistorialIMC(usuario);
@@ -35,8 +38,9 @@ public class IMCController {
     }
 
     @PostMapping("/imc")
-    public String calcularIMC(@ModelAttribute IMC imc, Model model, HttpSession session) {
+    public String calcularIMC(@ModelAttribute IMC imc, Model model, HttpSession session, @RequestParam double estatura) {
         Usuario usuario = usuarioService.getUsuarioActual(session);
+        usuario.setEstatura(estatura);
         imc.setUsuario(usuario);
         imc.setFecha(LocalDateTime.now());
         double imcValor = imc.getMasaCorporal() / Math.pow(usuario.getEstatura(), 2);

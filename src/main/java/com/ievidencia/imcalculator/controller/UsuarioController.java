@@ -4,15 +4,11 @@ import com.ievidencia.imcalculator.model.Usuario;
 import com.ievidencia.imcalculator.service.UsuarioService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/imcalculator")
@@ -33,7 +29,7 @@ public class UsuarioController {
             model.addAttribute("usuario", usuario);
             return "redirect:/imcalculator/imc";
         } else {
-            model.addAttribute("error", "Nombre de Usuario o contraseña incorrecto");
+            model.addAttribute("loginerror", true);
             return "login";
         }
     }
@@ -44,14 +40,23 @@ public class UsuarioController {
     }
     @PostMapping("/registro")
     public String registro(@ModelAttribute Usuario usuario, Model model) {
-        System.out.println("Quiero llorar");
-
         if (usuarioService.existsByNombreUsuario(usuario.getNombreUsuario())) {
             model.addAttribute("error", "El nombre de usuario ya existe");
+            return "registro";
+        } else if (usuario.getEdad() < 15) {
+            model.addAttribute("error", "La edad debe ser mayor o igual a 15");
+            return "registro";
+        } else if (usuario.getEstatura() < 1 || usuario.getEstatura() > 2.5) {
+            model.addAttribute("error", "La estatura debe estar entre 1 y 2.5 metros");
             return "registro";
         } else {
             Usuario usuarioRegistrado = usuarioService.registrarUsuario(usuario);
             return "redirect:/imcalculator/login";
         }
+    }
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/imcalculator/login";
     }
 }
